@@ -1,6 +1,6 @@
 # tvseries-django-crud-restapi
 
-TV Series Django WebApp interacts with a REST API focused on TV Series. 
+TV Series Django WebApp that interacts with a REST API focused on TV Series. 
 
 It's possible to perform CRUD operations to update and edit TV series information and its characters.
 
