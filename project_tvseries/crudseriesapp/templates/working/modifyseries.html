@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modificar Serie</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form action="change-series" method="POST" class="mt-4">
+            {% csrf_token %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <label for="name-series" class="form-label">Nombre:</label>
+                    <input id="name-series" name="name" value="{{ name }}" class="form-control"/>
+                </li>
+                <li class="list-group-item">
+                    <label for="image-series" class="form-label">Imagen:</label>
+                    <input id="image-series" name="image" value="{{ image }}" class="form-control"/>
+                </li>
+                <li class="list-group-item">
+                    <label for="score-series" class="form-label">Puntuación IMDb:</label>
+                    <input id="score-series" name="score" value="{{ score }}" class="form-control"/>
+                </li>
+                <li class="list-group-item">
+                    <label for="year-series" class="form-label">Año:</label>
+                    <input id="year-series" name="year" value="{{ year }}" class="form-control"/>
+                </li>
+            </ul>
+            <input id="idseries" name="idseries" readonly hidden value="{{ idseries }}"/>
+            <button id="btn-submit-mod-series" type="submit" class="btn btn-primary">Modify</button>
+        </form>
+    </div>
+
+    <script src="{% static 'jquery-3.2.1.min.js'%}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

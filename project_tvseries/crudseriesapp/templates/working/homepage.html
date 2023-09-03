@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicon/favicon-96x96.png'%}">
+    <script src="{% static 'jquery-3.2.1.min.js'%}" type="text/javascript"></script>
+</head>
+<body>
+    <nav>
+        <button type="button" id="btn-home" class="btn btn-primary">
+            <a href="http://127.0.0.1:8000/InventFlix/" style="text-decoration:none;color:white;">Home</a>
+        </button>
+        <button type="button" id="btn-new-series" onclick="newSeries()" class="btn btn-primary">New Series</button>
+        <h3 style="color:blue; text-align: center;">InventFlix</h3>
+        <select name="series" id="slt-series" onchange="chooseOption(null, false)" class="form-select" style="background-color: aqua">
+            <option  value="" disabled selected hidden>Series</option>
+            {% for series in list_series %}
+                <option style="background-color: white" value="{{ series.idSerie }}" {% if id_act_series == series.idSerie %} selected {% endif %}>
+                    {{ series.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </nav>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="div-new-series" class="card"></div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col">
+                <div id="series-detail" class="card"><img src="{% static 'pictures/picture about television series.png'%}" height="320" class="img-fluid"></div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function chooseOption(idActSeries, characters) {
+            selectedOption = null;
+            if(idActSeries == null){
+                const selectElement = document.getElementById("slt-series");
+                selectedOption = selectElement.value;
+            } else{
+                selectedOption = idActSeries;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "view-series",
+                data: "idseries=" + selectedOption + "&characters=" + characters,
+                success: function (msg) {
+                    $("#series-detail").html(msg);
+                }
+            });
+
+            if(document.getElementById("btn-add")){
+                viewCharacters();
+            }
+        }
+
+        var newSeriesVisible = false;
+
+        function newSeries(){
+            newSeriesVisible = !newSeriesVisible;
+            if(newSeriesVisible){
+                $.ajax({
+                type: "GET",
+                url: "new-series",
+                success: function (msg) {
+                    $("#div-new-series").html(msg);
+                    $("#div-new-series").slideDown("slow");
+                }
+            });
+            }else{
+                $("#div-new-series").slideUp("slow", function() {
+                $("#div-new-series").html("");
+                });
+            }
+        }
+    </script>
+
+    {% if id_act_series and list_characters %}
+    <script>
+        let id = {{id_act_series}};
+        chooseOption(id, true);
+    </script>
+    {% elif id_act_series %}
+    <script>
+        chooseOption({{id_act_series}}, false);
+    </script>
+    {% endif %}
+</body>
+</html>
+

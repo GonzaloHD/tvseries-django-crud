@@ -1,0 +1,87 @@
+{% if info_series %}
+<table class="table table-bordered" style="width:100%">
+    <tr>
+        <td><img src="{{info_series.imagen}}" height="320" class="img-fluid"></td>
+        <td>
+            <button type="button" id="btn-mod-series" onclick="modifySeries('{{info_series.nombre}}','{{info_series.imagen}}',{{info_series.puntuacion}},{{info_series.anyo}})" class="btn btn-primary">Modify Series</button>
+            <br/><br/>
+            <button type="button" id="btn-delete-series" class="btn btn-primary">
+                <a href="delete-series?id_series={{info_series.idSerie}}" style="text-decoration:none;color:white;">Delete Series</a>
+            </button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">{{info_series.nombre}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">Año: {{info_series.anyo}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">IMDB: {{info_series.puntuacion}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <button type="button" id="btn-characters" onclick="viewCharacters()" class="btn btn-primary">CHARACTERS</button>
+        </td>
+    </tr>
+</table>
+{% endif %}
+
+<div id="div-mod-series"></div>
+<div class="row">
+    <div class="col">
+        <div id="div-characters" class="card"></div>
+    </div>
+</div>
+
+<script>
+    var characterVisible = false;
+
+    function viewCharacters() {
+        characterVisible = !characterVisible;
+        if (characterVisible) {
+            $.ajax({
+                type: "GET",
+                url: "view-characters",
+                data: {
+                    "idseries": "{{ info_series.idSerie|stringformat:'s' }}"
+                },
+                success: function(msg) {
+                    $("#div-characters").html(msg);
+                    $("#div-characters").slideDown("slow");
+                }
+            });
+        } else {
+            $("#div-characters").slideUp("slow", function() {
+                $("#div-characters").html("");
+            });
+        }
+    }
+
+    function modifySeries(name, image, score, year) {
+        const selectElement = document.getElementById("slt-series");
+        const selectedOption = selectElement.value;
+        $.ajax({
+            type: "GET",
+            url: "modify-series",
+            data: "idseries=" + selectedOption + "&name=" + name + "&image=" + image + "&score=" + score + "&year=" + year,
+            success: function (msg) {
+                $("#div-mod-series").html(msg);
+            }
+        });
+
+    }
+</script>
+
+{% if view_characters %}
+<script>
+   viewCharacters();
+</script>
+{% endif %}
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modify Character</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <form action="change-character" method="POST" class="mt-4">
+            {% csrf_token %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <label for="name" class="form-label">Name:</label>
+                    <input id="name" name="name" value="{{ name }}" class="form-control"/>
+                </li>
+                <li class="list-group-item">
+                    <label for="image" class="form-label">Image:</label>
+                    <input id="image" name="image" value="{{ image }}" class="form-control"/>
+                </li>
+                <li class="list-group-item">
+                    <input id="idseries" name="idseries" value="{{ idseries }}" readonly hidden/>
+                    <input id="idcharacter" name="idcharacter" value="{{ idcharacter }}" readonly hidden/>
+                    <button id="btn-mod-character" type="submit" class="btn btn-primary">Modify</button>
+                </li>
+            </ul>
+
+        </form>
+    </div>
+
+</body>
+</html>

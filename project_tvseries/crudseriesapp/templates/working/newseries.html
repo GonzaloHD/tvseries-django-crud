@@ -1,0 +1,53 @@
+<form action="insert-series" method="POST">
+    {% csrf_token %}
+    <ul class="list-group">
+        <li class="list-group-item">
+            <label for="form-name" class="form-label">Name:</label>
+            <input id="form-name" name="name" class="form-control" required/>
+        </li>
+        <li class="list-group-item">
+            <label for="form-image" class="form-label">Image:</label>
+            <input id="form-image" name="image" class="form-control" required/>
+        </li>
+        <li class="list-group-item">
+            <label for="form-score" class="form-label">IMDB</label>
+            <input id="form-score" name="score" class="form-control" type="number" step="0.1"/>
+        </li>
+        <li class="list-group-item">
+            <label for="form-year" class="form-label">Year:</label>
+            <input id="form-year" name=year class="form-control" type="number" min="1900" max="2099" step="1" required/>
+        </li>
+    </ul>
+    <button id="btn-add-series" type="submit" class="btn btn-primary">Add</button>
+    <button id="btn-suggest-series"  class="btn btn-primary" type="button">Suggest Series</button>
+</form>
+
+<div id="div-suggested-series"></div>
+
+<!--  Option with POST method-->
+
+<script>
+    $(document).ready(function(){
+        $("#btn-suggest-series").click(function(){
+            $("#div-suggested-series").load("suggested-series");
+        });
+    });
+</script>
+
+
+<!--   Option with GET method-->
+
+<!--    <script>-->
+<!--     function suggestSeries(){-->
+<!--          $.ajax({-->
+<!--                    type: "GET",-->
+<!--                    url: "suggested-series",-->
+<!--                    success: function (msg) {-->
+<!--                        $("#div-suggested-series").html(msg);-->
+<!--                    }-->
+<!--                });-->
+<!--     }-->
+<!--    </script>-->
+
+
+

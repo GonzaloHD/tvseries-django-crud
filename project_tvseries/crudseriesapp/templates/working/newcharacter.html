@@ -1,0 +1,24 @@
+<div class="container">
+    <form action="insert-character" method="POST" class="mt-4">
+        {% csrf_token %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <label for="name" class="form-label">Name:</label>
+                <input id="name" name="name" class="form-control"/>
+            </li>
+            <li class="list-group-item">
+                <label for="image" class="form-label">Imagen:</label>
+                <input id="image" name="image" class="form-control"/>
+            </li>
+            <li class="list-group-item">
+                <input id="idseries" name="idseries" value="{{ idseries }}" hidden/>
+            </li>
+            <li class="list-group-item">
+                <button id="btn-insert-character" type="submit" class="btn btn-primary">Add</button>
+            </li>
+        </ul>
+    </form>
+</div>
+
+
+

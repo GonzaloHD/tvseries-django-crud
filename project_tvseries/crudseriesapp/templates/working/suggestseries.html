@@ -1,0 +1,26 @@
+
+     <select style="background-color: aqua" name="suggestedseries" id="slt-select-series" class="form-select" onchange="choose_selected_series()">
+            <option  value="" disabled selected hidden>Series</option>
+            {% for series in suggested_series %}
+                <option style="background-color: white" value="{{ series }}">
+                    {{ series.name }}
+                </option>
+            {% endfor %}
+     </select>
+
+  <script>
+      function choose_selected_series(){
+        var series = document.getElementById("slt-select-series").value;
+        var seriesDoubleQuotes = series.replace(/'/g, '"');
+        var seriesJSON = JSON.parse(seriesDoubleQuotes);
+        var name = seriesJSON['name'];
+        var year = seriesJSON['year'];
+        var IMDB = seriesJSON['IMDB']
+        var image = seriesJSON['image']
+        document.getElementById("form-name").value = name;
+        document.getElementById("form-year").value = year;
+        document.getElementById("form-score").value = IMDB;
+        document.getElementById("form-image").value = image;
+      }
+
+  </script>

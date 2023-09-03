@@ -1,0 +1,70 @@
+<button id="btn-add-character" onclick="newCharacter()" class="btn btn-primary">Add Character</button></a>
+<div id="character-detail"></div>
+<div id="character-edit"></div>
+{% if list_characters %}
+<table class="table table-bordered" style="width:100%">
+    <tr>
+        <td>Character</td>
+        <td>Image</td>
+        <td>Actions</td>
+    </tr>
+    {% for character in list_characters %}
+    <tr>
+        <td>{{ character.nombre }}</td>
+        <td><img src="{{ character.imagen }}" height="320" class="img-fluid"></td>
+        <td>
+            <button id="btn-mod-character" onclick="modifyCharacter({{ character.idPersonaje }},'{{ character.nombre }}','{{ character.imagen }}')" class="btn btn-primary">Edit Character</button>
+            <br/>
+            <br/>
+            <button id="btn-delete-character" onclick="deleteCharacter({{ character.idPersonaje }})" class="btn btn-primary">Delete Character</button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<script>
+
+    var newCharacterVisible = false;
+
+    function newCharacter() {
+        newCharacterVisible = !newCharacterVisible;
+        if(newCharacterVisible){
+            const selectElement = document.getElementById("slt-series");
+            const selectedOption = selectElement.value;
+            $.ajax({
+                type: "GET",
+                url: "new-character",
+                data: "idseries=" + selectedOption,
+                success: function (msg) {
+                    $("#div-characters").html(msg);
+                    $("#div-characters").slideDown("slow");
+                }
+            });
+        } else{
+            $("#div-characters").slideUp("slow", function() {
+            $("#div-characters").html("");
+            });
+        }
+    }
+
+    function modifyCharacter(id, name, image) {
+        const selectElement = document.getElementById("slt-series");
+        const selectedOption = selectElement.value;
+        $.ajax({
+            type: "GET",
+            url: "modify-character",
+            data: "idcharacter=" + id + "&idseries=" + selectedOption + "&name=" + name + "&image=" + image,
+            success: function (msg) {
+                $("#character-edit").html(msg);
+            }
+        });
+    }
+
+    function deleteCharacter(id) {
+        const selectElement = document.getElementById("slt-series");
+        const selectedOption = selectElement.value;
+        location.href = "delete-character?" + "idcharacter=" + id + "&idseries=" + selectedOption;
+    }
+</script>
+
