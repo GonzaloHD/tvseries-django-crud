@@ -1,4 +1,4 @@
-# tvseries-django-crud-restapi
+# tvseries-django-crud
 
 TV Series Django WebApp that interacts with a REST API focused on TV Series. 
 
